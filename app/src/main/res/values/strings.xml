@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Acronyms</string>
+    <string name="network_error">Network not available</string>
+    <string name="no_result_found">No Result Found</string>
+    <string name="something_went_wrong">No Result Found</string>
+    <string name="three_char_minimum">Enter Minimum 3 character</string>
+</resources>
