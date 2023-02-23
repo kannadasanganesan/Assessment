@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                     //calling search list api
                     mainViewModel.getResult(binding.searchView.query.toString())
                     registerObservers()
-                    binding.searchProgress.visibility = View.VISIBLE
+                    updateProgress(true)
                 } else {
                     Toast.makeText(
                         this@MainActivity,
@@ -83,9 +83,9 @@ class MainActivity : AppCompatActivity() {
             userList?.let {
                 if(userList.isNotEmpty()) {
                     userAdapter.setResult(it,it.get(0).lfs)
-                    binding.searchProgress.visibility = View.GONE
+                    updateProgress(false)
                 }else{
-                    binding.searchProgress.visibility = View.GONE
+                    updateProgress(false)
                     Toast.makeText(this, getString(R.string.no_result_found), Toast.LENGTH_SHORT).show()
                 }
             }
@@ -95,12 +95,17 @@ class MainActivity : AppCompatActivity() {
 
             //when exception occurs
             isFailed?.let {
-                binding.searchProgress.visibility = View.GONE
+                updateProgress(false)
                 Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show()
             }
         })
 
     }
+
+    private fun updateProgress(isShowing: Boolean) {
+        if (!isShowing) binding.searchProgress.visibility = View.GONE else binding.searchProgress.visibility = View.VISIBLE
+    }
+
     private fun isNetworkAvailable(): Boolean {
         val connMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo: NetworkInfo? = connMgr.activeNetworkInfo
